@@ -1,7 +1,11 @@
 package com.lisapeillon.mareu;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
@@ -9,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -24,6 +30,7 @@ import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
@@ -33,10 +40,13 @@ import com.lisapeillon.mareu.Model.Room;
 import com.lisapeillon.mareu.ViewModel.AddMeetingViewModel;
 import com.lisapeillon.mareu.databinding.ActivityAddMeetingBinding;
 
-import java.time.LocalDate;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class AddMeetingActivity extends AppCompatActivity {
 
@@ -45,8 +55,9 @@ public class AddMeetingActivity extends AppCompatActivity {
           private ChipGroup chipGroup;
           private Room selectedRoom;
           private  LocalTime selectedHour;
-          private LocalDate selectedDate;
+          private Date selectedDate;
 
+          @RequiresApi(api = Build.VERSION_CODES.O)
           @Override
           protected void onCreate(Bundle savedInstanceState) {
                     binding = ActivityAddMeetingBinding.inflate(getLayoutInflater());
@@ -59,11 +70,26 @@ public class AddMeetingActivity extends AppCompatActivity {
                     initView();
           }
 
+          @Override
+          public boolean onCreateOptionsMenu(Menu menu) {
+                    getMenuInflater().inflate(R.menu.menu_add_meeting, menu);
+                    return true;
+          }
+
+          @Override
+          public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+                    if (item.getItemId() == R.id.menu_add) {
+                              saveNewMeeting();
+                              return true;
+                    }
+                    return super.onOptionsItemSelected(item);
+          }
 
           private void configureViewModel() {
                     viewModel = new ViewModelProvider(this, ViewModelFactory.getInstance(this)).get(AddMeetingViewModel.class);
           }
 
+          @RequiresApi(api = Build.VERSION_CODES.O)
           private void initView() {
                     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                     chipGroup = binding.activityAddmeetingChipgroup;
@@ -71,12 +97,11 @@ public class AddMeetingActivity extends AppCompatActivity {
                     configureTimePicker();
                     configureRoomSpinner();
                     configureChips();
-                    binding.activityAddmeetingButtonSave.setOnClickListener(v -> saveNewMeeting());
           }
 
+          @RequiresApi(api = Build.VERSION_CODES.O)
           private void configureDatePicker(){
                     // --- DatePicker Constraints ---
-                    long today = MaterialDatePicker.todayInUtcMilliseconds();
                     CalendarConstraints.Builder constraintBuilder = new CalendarConstraints.Builder();
                     constraintBuilder.setValidator(DateValidatorPointForward.now());
 
@@ -84,7 +109,7 @@ public class AddMeetingActivity extends AppCompatActivity {
                     MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
                     builder.setTitleText("Sélectionner une date");
                     builder.setCalendarConstraints(constraintBuilder.build());
-                    MaterialDatePicker materialDatePicker = builder.build();
+                    MaterialDatePicker<Long> materialDatePicker = builder.build();
 
                     // --- Show Date Picker ---
                     binding.activityAddmeetingEdittextDatepicker.setOnClickListener(v -> {
@@ -92,11 +117,28 @@ public class AddMeetingActivity extends AppCompatActivity {
                     });
 
                     // --- Set date in edittext ---
-                    materialDatePicker.addOnPositiveButtonClickListener(selection ->
-                              binding.activityAddmeetingEdittextDatepicker.setText(materialDatePicker.getHeaderText()));
+                    materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
+                              @Override
+                              public void onPositiveButtonClick(Long selection) {
+                                        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+                                        calendar.setTimeInMillis(selection);
+                                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                                        selectedDate = new Date(selection);
+                                        String formattedDate = format.format(calendar.getTime());
+                                        binding.activityAddmeetingEdittextDatepicker.setText(formattedDate);
+                              }
+                    });
+
+                    materialDatePicker.addOnCancelListener(new DialogInterface.OnCancelListener() {
+                              @Override
+                              public void onCancel(DialogInterface dialog) {
+                                        materialDatePicker.onDestroy();
+                              }
+                    });
           }
 
 
+          @RequiresApi(api = Build.VERSION_CODES.O)
           private void configureTimePicker() {
                     // --- TimePicker Builder ---
                     MaterialTimePicker.Builder builder = new MaterialTimePicker.Builder();
@@ -109,8 +151,10 @@ public class AddMeetingActivity extends AppCompatActivity {
                     });
 
                     // --- Set time in edittext ---
-                    materialTimePicker.addOnPositiveButtonClickListener(v ->
-                              binding.activityAddmeetingEdittextTimepicker.setText(materialTimePicker.getHour() + ":" + materialTimePicker.getMinute()));
+                    materialTimePicker.addOnPositiveButtonClickListener(v -> {
+                              binding.activityAddmeetingEdittextTimepicker.setText(materialTimePicker.getHour() + ":" + materialTimePicker.getMinute());
+                              selectedHour = LocalTime.of(materialTimePicker.getHour(), materialTimePicker.getMinute());
+                    });
           }
 
           private void configureRoomSpinner() {
@@ -174,7 +218,7 @@ public class AddMeetingActivity extends AppCompatActivity {
                     boolean result = false;
 
                     // --- Sujet ---
-                    validation.addValidation(this, R.id.activity_addmeeting_edittext_subject, "^.[2,50]$", R.string.err_subject);
+                    validation.addValidation(this, R.id.activity_addmeeting_edittext_subject, "^.{2,50}", R.string.err_subject);
 
                     // --- Hour ---
                     validation.addValidation(this, R.id.activity_addmeeting_edittext_timepicker, "^[0-9]{1,2}:[0-9]{1,2}$", R.string.err_hour);

@@ -1,20 +1,20 @@
 package com.lisapeillon.mareu.Model;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Meeting {
 
           private int meetingId;
           private String subject;
           private LocalTime hour;
-          private LocalDate date;
+          private Date date;
           private int roomId;
           private ArrayList<String> emails;
 
           // --- CONSTRUCTOR ---
-          public Meeting(String subject, LocalDate date, LocalTime hour, int roomId, ArrayList<String> emails) {
+          public Meeting(String subject, Date date, LocalTime hour, int roomId, ArrayList<String> emails) {
                     this.subject = subject;
                     this.date = date;
                     this.hour = hour;
@@ -29,7 +29,7 @@ public class Meeting {
 
           public LocalTime getHour() { return hour; }
 
-          public LocalDate getDate() { return date; }
+          public Date getDate() { return date; }
 
           public int getRoomId() { return roomId; }
 
@@ -43,7 +43,7 @@ public class Meeting {
 
           public void setHour(LocalTime hour) { this.hour = hour; }
 
-          public void setDate(LocalDate date) { this.date = date; }
+          public void setDate(Date date) { this.date = date; }
 
           public void setRoomId(int roomId) { this.roomId = roomId; }
 

@@ -113,18 +113,4 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/activity_addmeeting_textinputlayout_participants"/>
 
-          <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/activity_addmeeting_button_save"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/addmeeting_margin_vertical"
-                    android:backgroundTint="@color/red"
-                    android:text="@string/save"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

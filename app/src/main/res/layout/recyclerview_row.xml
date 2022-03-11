@@ -47,7 +47,7 @@
                               app:layout_constraintTop_toTopOf="parent">
 
                               <TextView
-                                        android:id="@+id/recyclerview_row_textview_hour"
+                                        android:id="@+id/recyclerview_row_textview_datehour"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="01/01/2022 - 14h"

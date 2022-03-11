@@ -13,7 +13,9 @@ import com.lisapeillon.mareu.Model.Meeting;
 import com.lisapeillon.mareu.ViewModel.MainViewModel;
 import com.lisapeillon.mareu.databinding.RecyclerviewRowBinding;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 
 public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.MeetingsViewHolder> {
@@ -77,15 +79,14 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.Meetin
           public void onBindViewHolder(@NonNull MeetingsViewHolder holder, int position) {
                     Meeting meeting = meetingList.get(position);
                     // --- Room ---
-                    viewModel.getRoomName(meeting.getRoomId()).observe(lifecycleOwner, new Observer<String>() {
-                                        @Override
-                                        public void onChanged(String roomLetter) {
-                                                  holder.binding.recyclerviewRowTextviewRoomletter.setText(String.valueOf(roomLetter.charAt(roomLetter.length() - 1)));
-                                        }
-                              });
-                    // --- Hour ---
+                    viewModel.getRoomName(meeting.getRoomId()).observe(lifecycleOwner,
+                              roomLetter -> holder.binding.recyclerviewRowTextviewRoomletter.setText(String.valueOf(roomLetter.charAt(roomLetter.length() - 1))));
+                    // --- Hour & Date---
                     LocalTime hour = meeting.getHour();
-                    holder.binding.recyclerviewRowTextviewHour.setText(String.valueOf(hour));
+                    Date date = meeting.getDate();
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    String formattedDate = simpleDateFormat.format(date);
+                    holder.binding.recyclerviewRowTextviewDatehour.setText(formattedDate + " - " + hour);
                     // --- Subject ---
                     holder.binding.recyclerviewRowTextviewSubject.setText(meeting.getSubject());
                     // --- Guests ---
