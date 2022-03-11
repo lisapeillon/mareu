@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<chip xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:app="http://schemas.android.com/apk/res-auto"
+          android:textAppearance="@style/ChipTextAppearance"
+          app:chipBackgroundColor="@color/light_blue"
+          app:chipIcon="@drawable/ic_mail_outline"
+          app:closeIconTint="@color/white"
+          app:closeIconEnabled="true"/>

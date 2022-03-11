@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Ma Réu</string>
+    <string name="add_meeting">Ajouter une réunion</string>
+    <string name="subject">Sujet</string>
+    <string name="room">Salle</string>
+    <string name="save">Enregistrer la réunion</string>
+    <string name="save_new_meeting">Sauvegarde de la réunion</string>
+          <string name="participants">Participants</string>
+          <string name="date">Date</string>
+          <string name="heure">Heure</string>
+          <string name="err_subject">Merci de saisir un sujet à la réunion</string>
+          <string name="err_room">Merci de sélectionner une salle</string>
+          <string name="err_date">"Merci d'entrer une date "</string>
+          <string name="err_hour">Merci de sélectionner une heure</string>
+</resources>
