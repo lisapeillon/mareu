@@ -29,4 +29,10 @@ public class MainViewModel extends ViewModel {
     public LiveData<String> getRoomName(int roomId){
         return roomRepository.getRoomName(roomId);
     }
+
+    public void deleteMeeting(Meeting meeting) { executor.execute(() -> meetingRepository.deleteMeeting(meeting));}
+
+    public LiveData<List<Meeting>> getMeetingListSortedByDate() { return meetingRepository.getMeetingListSortedByDate();}
+
+    public LiveData<List<Meeting>> getMeetingListSortedByRoom() { return  meetingRepository.getMeetingListSortedByRoom();}
 }

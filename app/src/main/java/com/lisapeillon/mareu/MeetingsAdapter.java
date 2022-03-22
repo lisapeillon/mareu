@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lisapeillon.mareu.Model.Meeting;
@@ -35,7 +34,6 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.Meetin
 
           public interface Listener{
                     void onClickDeleteButton(Meeting meeting);
-                    void onClickDetails(Meeting meeting);
           }
 
 
@@ -98,7 +96,6 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.Meetin
                     stringBuilder.deleteCharAt(stringBuilder.length() - 1).deleteCharAt(stringBuilder.length() - 1);
                     holder.binding.recyclerviewRowTextviewMails.setText(stringBuilder);
                     // --- Actions ---
-                    holder.binding.recyclerviewRowCardview.setOnClickListener(v -> callback.onClickDetails(meeting));
                     holder.binding.recyclerviewRowImageviewDelete.setOnClickListener(v -> callback.onClickDeleteButton(meeting));
           }
 

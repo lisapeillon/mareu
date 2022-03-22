@@ -1,7 +1,6 @@
 package com.lisapeillon.mareu;
 
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,8 +9,6 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -20,11 +17,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
-import com.basgeekball.awesomevalidation.ValidationHolder;
 import com.basgeekball.awesomevalidation.ValidationStyle;
-import com.basgeekball.awesomevalidation.utility.custom.CustomErrorReset;
-import com.basgeekball.awesomevalidation.utility.custom.CustomValidation;
-import com.basgeekball.awesomevalidation.utility.custom.CustomValidationCallback;
+import com.basgeekball.awesomevalidation.utility.custom.SimpleCustomValidation;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.datepicker.CalendarConstraints;
@@ -202,15 +196,15 @@ public class AddMeetingActivity extends AppCompatActivity {
                     AwesomeValidation awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
                     if(awesomeValidationAddMeeting(awesomeValidation)){
-                    String subject = binding.activityAddmeetingEdittextSubject.getText().toString();
-                    ArrayList<String> emails = new ArrayList<>();
-                    for (int i = 0; i < chipGroup.getChildCount(); i++) {
-                              String email = ((Chip) chipGroup.getChildAt(i)).getText().toString();
-                              emails.add(email);
-                    }
-                    Meeting meeting = new Meeting(subject, selectedDate, selectedHour, selectedRoom.getRoomId(), emails);
-                    viewModel.createMeeting(meeting);
-                    finish();
+                              String subject = binding.activityAddmeetingEdittextSubject.getText().toString();
+                              ArrayList<String> emails = new ArrayList<>();
+                              for (int i = 0; i < chipGroup.getChildCount(); i++) {
+                                        String email = ((Chip) chipGroup.getChildAt(i)).getText().toString();
+                                        emails.add(email);
+                              }
+                              Meeting meeting = new Meeting(subject, selectedDate, selectedHour, selectedRoom.getRoomId(), emails);
+                              viewModel.createMeeting(meeting);
+                              finish();
                     }
           }
 
@@ -223,29 +217,27 @@ public class AddMeetingActivity extends AppCompatActivity {
                     // --- Hour ---
                     validation.addValidation(this, R.id.activity_addmeeting_edittext_timepicker, "^[0-9]{1,2}:[0-9]{1,2}$", R.string.err_hour);
 
+                    // --- Date ---
+                    validation.addValidation(this, R.id.activity_addmeeting_edittext_datepicker, "^[0-9]{4}-[0-9]{2}-[0-9]{2}", R.string.err_date);
+
                     // --- Room ---
-                    validation.addValidation(this, R.id.activity_addmeeting_spinner_room, new CustomValidation() {
+                    validation.addValidation(this, R.id.activity_addmeeting_spinner_room, new SimpleCustomValidation() {
                               @Override
-                              public boolean compare(ValidationHolder validationHolder) {
-                                        return true;
-                              }
-                    }, new CustomValidationCallback() {
-                              @Override
-                              public void execute(ValidationHolder validationHolder) {
-                                        TextView textViewError = (TextView) ((Spinner) validationHolder.getView()).getSelectedView();
-                                        textViewError.setError(validationHolder.getErrMsg());
-                                        textViewError.setTextColor(Color.RED);
-                              }
-                    }, new CustomErrorReset() {
-                              @Override
-                              public void reset(ValidationHolder validationHolder) {
-                                        TextView textViewError = (TextView) ((Spinner) validationHolder.getView()).getSelectedView();
-                                        textViewError.setError(null);
-                                        textViewError.setTextColor(Color.BLACK);
+                              public boolean compare(String s) {
+                                        if(s.isEmpty()) return false;
+                                        else return true;
                               }
                     }, R.string.err_room);
 
                     // --- Guests ---
+                    validation.addValidation(this, R.id.activity_addmeeting_edittext_email, new SimpleCustomValidation() {
+                              @Override
+                              public boolean compare(String s) {
+                                        if(chipGroup.getChildCount() > 1) return true;
+                                        else return false;
+                              }
+                    }, R.string.err_emails);
+
                     if (validation.validate()) {
                               result = true;
                     }
