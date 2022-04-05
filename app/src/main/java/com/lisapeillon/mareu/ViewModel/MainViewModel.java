@@ -12,27 +12,27 @@ import java.util.concurrent.Executor;
 
 public class MainViewModel extends ViewModel {
 
-    private final MeetingRepository meetingRepository;
-    private final RoomRepository roomRepository;
-    private final Executor executor;
+          private final MeetingRepository meetingRepository;
+          private final RoomRepository roomRepository;
+          private final Executor executor;
 
-    public MainViewModel(MeetingRepository meetingRepository, RoomRepository roomRepository, Executor executor){
-        this.meetingRepository = meetingRepository;
-        this.roomRepository = roomRepository;
-        this.executor = executor;
-    }
+          public MainViewModel(MeetingRepository meetingRepository, RoomRepository roomRepository, Executor executor){
+                    this.meetingRepository = meetingRepository;
+                    this.roomRepository = roomRepository;
+                    this.executor = executor;
+          }
 
-    public LiveData<List<Meeting>> getMeetingList() {
-        return meetingRepository.getMeetingList();
-    }
+          public LiveData<List<Meeting>> getMeetingList() {
+                    return meetingRepository.getMeetingList();
+          }
 
-    public LiveData<String> getRoomName(int roomId){
-        return roomRepository.getRoomName(roomId);
-    }
+          public LiveData<String> getRoomName(int roomId){
+                    return roomRepository.getRoomName(roomId);
+          }
 
-    public void deleteMeeting(Meeting meeting) { executor.execute(() -> meetingRepository.deleteMeeting(meeting));}
+          public void deleteMeeting(Meeting meeting) { executor.execute(() -> meetingRepository.deleteMeeting(meeting));}
 
-    public LiveData<List<Meeting>> getMeetingListSortedByDate() { return meetingRepository.getMeetingListSortedByDate();}
+          public LiveData<List<Meeting>> getMeetingListSortedByDate() { return meetingRepository.getMeetingListSortedByDate();}
 
-    public LiveData<List<Meeting>> getMeetingListSortedByRoom() { return  meetingRepository.getMeetingListSortedByRoom();}
+          public LiveData<List<Meeting>> getMeetingListSortedByRoom() { return  meetingRepository.getMeetingListSortedByRoom();}
 }

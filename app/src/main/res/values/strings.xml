@@ -5,7 +5,7 @@
     <string name="room">Salle</string>
     <string name="save">Enregistrer la réunion</string>
     <string name="save_new_meeting">Sauvegarde de la réunion</string>
-          <string name="participants">Participants</string>
+          <string name="participants">Emails des participants</string>
           <string name="date">Date</string>
           <string name="heure">Heure</string>
           <string name="err_subject">Merci de saisir un sujet à la réunion</string>
@@ -15,4 +15,6 @@
           <string name="sortbydate">Trier par date</string>
           <string name="sortbyroom">Trier par salle</string>
           <string name="err_emails">Merci d\'entrer au moins deux participants</string>
+          <string name="meeting_deleted">La réunion a bien été supprimée</string>
+          <string name="err_format_email">Merci de saisir une adresse email</string>
 </resources>

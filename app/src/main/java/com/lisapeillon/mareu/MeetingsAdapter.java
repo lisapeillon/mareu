@@ -95,6 +95,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.Meetin
                     }
                     stringBuilder.deleteCharAt(stringBuilder.length() - 1).deleteCharAt(stringBuilder.length() - 1);
                     holder.binding.recyclerviewRowTextviewMails.setText(stringBuilder);
+                    holder.binding.recyclerviewRowTextviewMails.setSelected(true);
                     // --- Actions ---
                     holder.binding.recyclerviewRowImageviewDelete.setOnClickListener(v -> callback.onClickDeleteButton(meeting));
           }

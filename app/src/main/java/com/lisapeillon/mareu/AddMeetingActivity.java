@@ -3,6 +3,7 @@ package com.lisapeillon.mareu;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -183,13 +184,25 @@ public class AddMeetingActivity extends AppCompatActivity {
           }
 
           private void chipifyEmail(TextInputEditText textInputEditText) {
-                    Chip emailChip = new Chip(this);
-                    emailChip.setText(textInputEditText.getText().toString());
-                    emailChip.setChipIconResource(R.drawable.ic_mail_outline);
-                    emailChip.setCloseIconVisible(true);
-                    emailChip.setCloseIconTintResource(R.color.light_blue);
-                    emailChip.setOnCloseIconClickListener(v -> chipGroup.removeView(emailChip));
-                    chipGroup.addView(emailChip);
+                    AwesomeValidation awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+                    if(validationEmail(awesomeValidation)){
+                              Chip emailChip = new Chip(this);
+                              emailChip.setText(textInputEditText.getText().toString());
+                              emailChip.setChipIconResource(R.drawable.ic_mail_outline);
+                              emailChip.setCloseIconVisible(true);
+                              emailChip.setCloseIconTintResource(R.color.light_blue);
+                              emailChip.setOnCloseIconClickListener(v -> chipGroup.removeView(emailChip));
+                              chipGroup.addView(emailChip);
+                    }
+          }
+
+          private boolean validationEmail(AwesomeValidation validation){
+                    boolean result = false;
+                    validation.addValidation(this, R.id.activity_addmeeting_edittext_email, Patterns.EMAIL_ADDRESS, R.string.err_format_email);
+                    if (validation.validate()){
+                              result = true;
+                    }
+                    return result;
           }
 
           private void saveNewMeeting() {
