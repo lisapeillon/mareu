@@ -33,7 +33,7 @@ public class DummyMeetingsGenerator {
                     new Meeting("Sujet réunion 5", DATE, HOUR, 5, emails)
           );
 
-          static List<Meeting> generateDummyMeetings(){ return new ArrayList<>(DUMMY_MEETINGS); }
+          public static List<Meeting> generateDummyMeetings(){ return new ArrayList<>(DUMMY_MEETINGS); }
 
           private static Meeting MEETING_TO_INSERT = new Meeting("Sujet", DATE, HOUR, 6, emails);
           static Meeting getMeetingToInsert() { return MEETING_TO_INSERT; }

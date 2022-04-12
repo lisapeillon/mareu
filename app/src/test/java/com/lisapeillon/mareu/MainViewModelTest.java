@@ -6,12 +6,13 @@ import static org.junit.Assert.assertTrue;
 import android.content.Context;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.test.core.app.ApplicationProvider;
 
-import com.lisapeillon.mareu.Injections.ViewModelFactory;
 import com.lisapeillon.mareu.Model.Meeting;
+import com.lisapeillon.mareu.Repositories.MeetingRepository;
+import com.lisapeillon.mareu.Repositories.RoomRepository;
 import com.lisapeillon.mareu.ViewModel.MainViewModel;
+import com.lisapeillon.mareu.utils.DummyMeetingsGenerator;
 import com.lisapeillon.mareu.utils.LiveDataTestUtils;
 
 import org.junit.Before;
@@ -25,13 +26,18 @@ import java.util.List;
 public class MainViewModelTest {
 
           private MainViewModel mainViewModel;
+          private MeetingRepository meetingRepository;
+          private RoomRepository roomRepository;
           private Context context;
 
 
           @Before
           public void setup() {
-                    context = context.getApplicationContext();
-                    mainViewModel = new ViewModelProvider((ViewModelStoreOwner) this, ViewModelFactory.getInstance(context)).get(MainViewModel.class);
+                    context = ApplicationProvider.getApplicationContext();
+                    mainViewModel = new MainViewModel(meetingRepository, roomRepository, context.getMainExecutor());
+/*
+                    mainViewModel = new ViewModelProvider((ViewModelStoreOwner) this, ViewModelFactory.getInstance(context.getApplicationContext())).get(MainViewModel.class);
+*/
           }
 
           @Test
@@ -41,7 +47,7 @@ public class MainViewModelTest {
                     // On veut que la liste soit vide
                     assertTrue(meetings.getValue().isEmpty());
                     // On ajoute la liste de réunions
-
+                    mainViewModel.getMeetingRepository().meetings = DummyMeetingsGenerator.generateDummyMeetings();
                     // On veut que la liste soit égale à 5
                     LiveDataTestUtils.getValue(meetings);
                     assertTrue(meetings.getValue().size() == 5);

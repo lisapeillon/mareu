@@ -12,7 +12,7 @@ import java.util.List;
 
 public class MeetingRepository {
 
-          private static List<Meeting> meetings = new ArrayList<>();
+          public  List<Meeting> meetings = new ArrayList<>();
           MutableLiveData<List<Meeting>> data = new  MutableLiveData<>();
 
           public void createMeeting(Meeting meeting){
