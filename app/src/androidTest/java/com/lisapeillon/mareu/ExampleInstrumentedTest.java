@@ -65,5 +65,12 @@ public class ExampleInstrumentedTest {
           }
 
           @Test
-          //tri
+          public void meetingList_sortByRoomAction_shouldSortMeetingList(){
+
+          }
+
+          @Test
+          public void meetingList_sortByDateAction_shouldsortMeetingList(){
+
+          }
 }
