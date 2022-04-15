@@ -3,35 +3,41 @@ package com.lisapeillon.mareu;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.LiveData;
 import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.lisapeillon.mareu.Model.Meeting;
 import com.lisapeillon.mareu.Repositories.MeetingRepository;
 import com.lisapeillon.mareu.Repositories.RoomRepository;
 import com.lisapeillon.mareu.ViewModel.MainViewModel;
-import com.lisapeillon.mareu.utils.DummyMeetingsGenerator;
 import com.lisapeillon.mareu.utils.LiveDataTestUtils;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
 import java.sql.Date;
 import java.util.List;
 
-@RunWith(JUnit4.class)
+@RunWith(AndroidJUnit4.class)
 public class MainViewModelTest {
 
           private MainViewModel mainViewModel;
           private MeetingRepository meetingRepository;
           private RoomRepository roomRepository;
 
+          @Rule
+          public InstantTaskExecutorRule testRule = new InstantTaskExecutorRule();
 
           @Before
           public void setup() {
-                    mainViewModel = new MainViewModel(meetingRepository, roomRepository, ApplicationProvider.getApplicationContext().getMainExecutor());
+                    this.meetingRepository = new MeetingRepository();
+                    this.roomRepository = new RoomRepository();
+                    mainViewModel = new MainViewModel(meetingRepository, roomRepository,
+                              ApplicationProvider.getApplicationContext().getMainExecutor());
                 //    mainViewModel = new ViewModelProvider((ViewModelStoreOwner) this, ViewModelFactory.getInstance(context.getApplicationContext())).get(MainViewModel.class);
           }
 

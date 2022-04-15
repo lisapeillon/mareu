@@ -1,4 +1,4 @@
-package com.lisapeillon.mareu.utils;
+package com.lisapeillon.mareu;
 
 import com.lisapeillon.mareu.Model.Meeting;
 

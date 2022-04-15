@@ -26,7 +26,7 @@ public class MeetingRepository {
           }
 
           public LiveData<List<Meeting>> getMeetingList(){
-                    data.setValue(meetings);
+                    data.postValue(meetings);
                     return data;
           }
 
