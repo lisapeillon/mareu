@@ -1,4 +1,4 @@
-package com.lisapeillon.mareu;
+package com.lisapeillon.mareu.utils;
 
 import com.lisapeillon.mareu.Model.Meeting;
 
@@ -29,6 +29,8 @@ public class DummyMeetingsGenerator {
                     }
           }
 
+          public DummyMeetingsGenerator() throws ParseException {}
+
           public static List<Meeting> generateDummyMeetings(){ return new ArrayList<>(DUMMY_MEETINGS); }
 
           private static Meeting MEETING_TO_INSERT;
@@ -41,5 +43,5 @@ public class DummyMeetingsGenerator {
                     }
           }
 
-          public static ArrayList getMeetingToInsert() { return new ArrayList<>( Arrays.asList(MEETING_TO_INSERT)); }
+          public static Meeting getMeetingToInsert() { return MEETING_TO_INSERT; }
 }

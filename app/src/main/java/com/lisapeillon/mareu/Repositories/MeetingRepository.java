@@ -12,8 +12,8 @@ import java.util.List;
 
 public class MeetingRepository {
 
-          public  List<Meeting> meetings = new ArrayList<>();
-          MutableLiveData<List<Meeting>> data = new  MutableLiveData<>();
+          public static List<Meeting> meetings = new ArrayList<>();
+          static MutableLiveData<List<Meeting>> data = new  MutableLiveData<>();
 
           public void createMeeting(Meeting meeting){
                     meetings.add(meeting);
@@ -25,7 +25,7 @@ public class MeetingRepository {
                     data.postValue(meetings);
           }
 
-          public LiveData<List<Meeting>> getMeetingList(){
+          public static LiveData<List<Meeting>> getMeetingList(){
                     data.postValue(meetings);
                     return data;
           }
