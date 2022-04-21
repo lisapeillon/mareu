@@ -24,7 +24,10 @@ public class LiveDataTestUtils {
                               }
                     };
                     liveData.observeForever(observer);
-                    latch.await(2, TimeUnit.SECONDS);
+                    //Don't wait indefinitely if the livedata is not set
+              if(!latch.await(2, TimeUnit.SECONDS)){
+                  throw new RuntimeException("LiveData value was never set");
+              }
                     //noinspection unchecked
                     return (T) data[0];
           }
