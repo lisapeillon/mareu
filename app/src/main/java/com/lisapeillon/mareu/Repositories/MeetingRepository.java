@@ -12,8 +12,9 @@ import java.util.List;
 
 public class MeetingRepository {
 
-          public static List<Meeting> meetings = new ArrayList<>();
-          static MutableLiveData<List<Meeting>> data = new  MutableLiveData<>();
+          public List<Meeting> meetings = new ArrayList<>();
+          MutableLiveData<List<Meeting>> data = new  MutableLiveData<>();
+          public static String color;
 
           public void createMeeting(Meeting meeting){
                     meetings.add(meeting);
@@ -25,7 +26,7 @@ public class MeetingRepository {
                     data.postValue(meetings);
           }
 
-          public static LiveData<List<Meeting>> getMeetingList(){
+          public LiveData<List<Meeting>> getMeetingList(){
                     data.postValue(meetings);
                     return data;
           }

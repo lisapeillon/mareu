@@ -85,13 +85,13 @@ public class MeetingRepositoryTest {
                     result = LiveDataTestUtils.getValue(meetings);
                     //On vérifie que la première date est ...
                     Date expectedDateBeforeSort = new SimpleDateFormat("yyyy-MM-dd").parse("2022-04-11");
-                    assertSame(result.get(0).getDate(), expectedDateBeforeSort);
+                    assertEquals(result.get(0).getDate(), expectedDateBeforeSort);
                     //On trie la liste
                     meetings = repository.getMeetingListSortedByDate();
                     result = LiveDataTestUtils.getValue(meetings);
                     //On vérifie que la première date est...
                     Date expectedDateAfterSort = new SimpleDateFormat("yyyy-MM-dd").parse("2022-01-24");
-                    assertSame(result.get(0).getDate(), expectedDateAfterSort);
+                    assertEquals(result.get(0).getDate(), expectedDateAfterSort);
           }
           
           @Test

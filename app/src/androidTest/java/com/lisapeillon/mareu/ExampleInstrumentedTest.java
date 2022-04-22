@@ -41,8 +41,6 @@ public class ExampleInstrumentedTest {
           public void setup(){
                     addMeetingActivity = activityTestRule.getActivity();
                     assertThat(addMeetingActivity, notNullValue());
-                    addMeetingViewModel = new ViewModelProvider((ViewModelStoreOwner) this, ViewModelFactory.getInstance(addMeetingActivity.getApplicationContext())).get(AddMeetingViewModel.class);
-
           }
 
           @Test
