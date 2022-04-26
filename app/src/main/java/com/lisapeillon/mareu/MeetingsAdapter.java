@@ -111,7 +111,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.Meetin
           // --- ACTIONS ---
           // ---------------
 
-          public void updateMeetingList(List<Meeting>meetingList){
+          public void updateMeetingList(List<Meeting> meetingList){
                     this.meetingList = meetingList;
                     notifyDataSetChanged();
           }

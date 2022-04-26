@@ -14,7 +14,6 @@ public class MeetingRepository {
 
           public List<Meeting> meetings = new ArrayList<>();
           MutableLiveData<List<Meeting>> data = new  MutableLiveData<>();
-          public static String color;
 
           public void createMeeting(Meeting meeting){
                     meetings.add(meeting);

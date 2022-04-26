@@ -1,7 +1,4 @@
-package com.lisapeillon.mareu.utils;
-
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+package com.lisapeillon.mareu.Data;
 
 import com.lisapeillon.mareu.Model.Meeting;
 

@@ -9,8 +9,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.LiveData;
 
 import com.lisapeillon.mareu.Model.Meeting;
-import com.lisapeillon.mareu.Repositories.MeetingRepository;
-import com.lisapeillon.mareu.utils.DummyMeetingsGenerator;
+import com.lisapeillon.mareu.Data.DummyMeetingsGenerator;
 import com.lisapeillon.mareu.utils.LiveDataTestUtils;
 
 import org.junit.Before;
