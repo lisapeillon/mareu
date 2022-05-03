@@ -1,7 +1,5 @@
 package com.lisapeillon.mareu.Injections;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -21,20 +19,20 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     private final Executor executor;
     private static ViewModelFactory factory;
 
-    public static ViewModelFactory getInstance(Context context){
+    public static ViewModelFactory getInstance(){
         if(factory == null){
             synchronized (ViewModelFactory.class){
                 if(factory == null){
-                    factory = new ViewModelFactory(context);
+                    factory = new ViewModelFactory();
                 }
             }
         }
         return factory;
     }
 
-    private ViewModelFactory(Context context){
-        this.meetingRepository = new MeetingRepository();
-        this.roomRepository = new RoomRepository();
+    private ViewModelFactory(){
+        this.meetingRepository = DI.getMeetingRepository();
+        this.roomRepository = DI.getRoomRepository();
         this.executor = Executors.newSingleThreadExecutor();
     }
 

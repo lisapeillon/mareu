@@ -81,7 +81,7 @@ public class AddMeetingActivity extends AppCompatActivity {
           }
 
           private void configureViewModel() {
-                    viewModel = new ViewModelProvider(this, ViewModelFactory.getInstance(this)).get(AddMeetingViewModel.class);
+                    viewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(AddMeetingViewModel.class);
           }
 
           @RequiresApi(api = Build.VERSION_CODES.O)

@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements MeetingsAdapter.L
           // ---------------
 
           private void configureViewModel(){
-                    viewModel = new ViewModelProvider(this, ViewModelFactory.getInstance(this)).get(MainViewModel.class);
+                    viewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MainViewModel.class);
           }
 
           private void configureRecyclerView(){
