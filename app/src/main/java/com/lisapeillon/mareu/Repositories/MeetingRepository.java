@@ -5,9 +5,11 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.lisapeillon.mareu.Model.Meeting;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class MeetingRepository {
@@ -40,6 +42,21 @@ public class MeetingRepository {
                     data.setValue(meetings);
                     return data;
           }
+          
+          public LiveData<List<Meeting>> getMeetingsFilterByDate(Date date){
+                    //TODO
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    String formattedSelectedDate = format.format(date);
+                    List<Meeting> meetingsFilterByDate = new ArrayList<>();
+                    for(Meeting meeting : meetings){
+                              String formattedDate = format.format(meeting.getDate());
+                              if(formattedDate.equals(formattedSelectedDate)){
+                                        meetingsFilterByDate.add(meeting);
+                              }
+                    }
+                    data.setValue(meetingsFilterByDate);
+                    return data;
+          }
 
           public LiveData<List<Meeting>> getMeetingListSortedByRoom(){
                     Collections.sort(meetings, new Comparator<Meeting>() {
@@ -48,6 +65,18 @@ public class MeetingRepository {
                                         return String.valueOf(o1.getRoomId()).compareTo(String.valueOf(o2.getRoomId()));
                               }
                     });
+                    data.setValue(meetings);
+                    return data;
+          }
+          
+          public LiveData<List<Meeting>> getMeetingsFilterByRoom(int roomId){
+                    //TODO
+                    List<Meeting> meetingsFilterByRoom = new ArrayList<>();
+                    for(Meeting meeting : meetings){
+                              if(meeting.getRoomId() == roomId){
+                                        meetingsFilterByRoom.add(meeting);
+                              }
+                    }
                     data.setValue(meetings);
                     return data;
           }

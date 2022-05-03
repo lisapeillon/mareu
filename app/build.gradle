@@ -48,7 +48,7 @@ dependencies {
     androidTestImplementation 'androidx.test:rules:1.4.0'
     androidTestImplementation "androidx.test:runner:1.4.0"
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
-    testImplementation "android.arch.core:core-testing:1.0.0"
+    testImplementation "android.arch.core:core-testing:1.1.1"
     // --- ViewModel & LiveData ---
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     // --- Awesome Validation ---

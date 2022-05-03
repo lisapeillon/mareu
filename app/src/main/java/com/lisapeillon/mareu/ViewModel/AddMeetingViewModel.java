@@ -22,11 +22,7 @@ public class AddMeetingViewModel extends ViewModel {
         this.roomRepository = roomRepository;
         this.executor = executor;
     }
-
-    public LiveData<List<Meeting>> getMeetingList() {
-        return meetingRepository.getMeetingList();
-    }
-
+    
     public void createMeeting(Meeting meeting){
         meetingRepository.createMeeting(meeting);
     }

@@ -14,8 +14,11 @@
         <entry key="..\:/Users/U817176/AndroidStudioProjects/MaReu/app/src/main/res/xml/chip.xml" value="0.24322916666666666" />
         <entry key="app/src/main/res/layout/activity_add_meeting.xml" value="0.24583333333333332" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/recyclerview_row.xml" value="0.24583333333333332" />
+        <entry key="app/src/main/res/layout/custom_room_list_dialog.xml" value="0.24583333333333332" />
+        <entry key="app/src/main/res/layout/recyclerview_row.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/recyclerview_row_roomlistdialog.xml" value="0.1" />
         <entry key="app/src/main/res/menu/menu_add_meeting.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/menu_filter_list.xml" value="0.24583333333333332" />
         <entry key="app/src/main/res/menu/menu_sort_list.xml" value="0.24583333333333332" />
       </map>
     </option>

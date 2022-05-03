@@ -26,5 +26,4 @@ public class RoomRepository {
                     roomName.setValue(roomNameStr);
                     return roomName;
           }
-
 }

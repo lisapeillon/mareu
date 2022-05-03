@@ -12,9 +12,11 @@
           <string name="err_room">Merci de sélectionner une salle</string>
           <string name="err_date">"Merci d'entrer une date "</string>
           <string name="err_hour">Merci de sélectionner une heure</string>
-          <string name="sortbydate">Trier par date</string>
-          <string name="sortbyroom">Trier par salle</string>
+          <string name="filterbydate">Filtrer par date</string>
+          <string name="filterbyroom">Filtrer par salle</string>
           <string name="err_emails">Merci d\'entrer au moins deux participants</string>
           <string name="meeting_deleted">La réunion a bien été supprimée</string>
           <string name="err_format_email">Merci de saisir une adresse email</string>
+    <string name="sortbyroom">Trier par salle</string>
+    <string name="sortbydate">Trier par date</string>
 </resources>
