@@ -50,5 +50,7 @@ public class MainViewModel extends ViewModel {
 
           public LiveData<List<Meeting>> getMeetingListSortedByRoom() { return  meetingRepository.getMeetingListSortedByRoom();}
           
-          public LiveData<List<Meeting>> getMeetingsFilterByRoom(int roomId) { return meetingRepository.getMeetingsFilterByRoom(roomId); }
+          public LiveData<List<Meeting>> getMeetingsFilterByRoom(int roomId) {
+                    return meetingRepository.getMeetingsFilterByRoom(roomId);
+          }
 }

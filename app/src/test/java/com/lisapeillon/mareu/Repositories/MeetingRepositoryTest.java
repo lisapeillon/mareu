@@ -78,7 +78,7 @@ public class MeetingRepositoryTest {
           }
           
           @Test
-          public void sortMeetingByDateWithSuccess() throws InterruptedException, ParseException {
+          public void sortMeetingsByDateWithSuccess() throws InterruptedException, ParseException {
                     //On récupère la liste des réunions
                     meetings = repository.getMeetingList();
                     result = LiveDataTestUtils.getValue(meetings);
@@ -94,16 +94,50 @@ public class MeetingRepositoryTest {
           }
           
           @Test
-          public void sortMeetingByRoomWithSuccess() throws InterruptedException {
+          public void sortMeetingsByRoomWithSuccess() throws InterruptedException {
                     //On récupère la liste des réunions
                     meetings = repository.getMeetingList();
                     result = LiveDataTestUtils.getValue(meetings);
-                    //On vérifie que la première salle a l'ID 5
+                    //On vérifie que la première réunion a lieu dans une salle avec l'ID 4
                     assertEquals(4, result.get(0).getRoomId());
                     //On trie la liste
                     meetings = repository.getMeetingListSortedByRoom();
                     result = LiveDataTestUtils.getValue(meetings);
                     //On vérifie que la première salle a l'ID 1
                     assertEquals(1, result.get(0).getRoomId());
+          }
+          
+          @Test
+          public void filterMeetingsByRoomWithSuccess() throws InterruptedException{
+                    //On récupère la liste des réunions
+                    meetings = repository.getMeetingList();
+                    result = LiveDataTestUtils.getValue(meetings);
+                    //On vérifie que la première réunion a lieu dans une salle avec l'ID 4
+                    assertEquals(4, result.get(0).getRoomId());
+                    //On filtre la liste par ID 3
+                    meetings = repository.getMeetingsFilterByRoom(3);
+                    result = LiveDataTestUtils.getValue(meetings);
+                    //On vérifie que la première et deuxième salles ont l'ID 3
+                    assertEquals(3, result.get(0).getRoomId());
+                    assertEquals(3, result.get(1).getRoomId());
+          }
+          
+          @Test
+          public void filterMeetingsByDateWithSuccess() throws InterruptedException, ParseException {
+                    //On récupère la liste des réunions
+                    meetings = repository.getMeetingList();
+                    result = LiveDataTestUtils.getValue(meetings);
+                    //On vérifie que la première réunion a lieu le 11/04/2022
+                    Date dateBeforeFilter = result.get(0).getDate();
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    String formattedDateBeforeFilter = format.format(dateBeforeFilter);
+                    assertEquals(formattedDateBeforeFilter, "2022-04-11");
+                    //On filtre la liste sur la date 24/05/2022
+                    meetings = repository.getMeetingsFilterByDate(format.parse("2022-05-24"));
+                    result = LiveDataTestUtils.getValue(meetings);
+                    //On vérifie que la première réunion a lieu le 24/05/2022
+                    Date dateAfterFilter = result.get(0).getDate();
+                    String formattedDateAfterFilter = format.format(dateAfterFilter);
+                    assertEquals(formattedDateAfterFilter, "2022-05-24");
           }
 }

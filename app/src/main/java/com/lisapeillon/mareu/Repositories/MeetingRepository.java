@@ -77,7 +77,7 @@ public class MeetingRepository {
                                         meetingsFilterByRoom.add(meeting);
                               }
                     }
-                    data.setValue(meetings);
+                    data.setValue(meetingsFilterByRoom);
                     return data;
           }
 }

@@ -1,27 +1,21 @@
 package com.lisapeillon.mareu;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.datepicker.CalendarConstraints;
-import com.google.android.material.datepicker.DateValidatorPointForward;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.lisapeillon.mareu.Data.DummyMeetingsGenerator;
 import com.lisapeillon.mareu.Injections.DI;
 import com.lisapeillon.mareu.Injections.ViewModelFactory;
@@ -31,21 +25,21 @@ import com.lisapeillon.mareu.Repositories.MeetingRepository;
 import com.lisapeillon.mareu.ViewModel.MainViewModel;
 import com.lisapeillon.mareu.databinding.ActivityMainBinding;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-public class MainActivity extends AppCompatActivity implements MeetingsAdapter.Listener, RoomDialogAdapter.Listener  {
+public class MainActivity extends AppCompatActivity implements MeetingsAdapter.Listener  {
           
           private  ActivityMainBinding binding;
           
           private MeetingsAdapter adapter;
           private MainViewModel viewModel;
           
-          private Date selectedDate;
+          private Room[] roomArray;
+          
           
           @Override
           protected void onCreate(Bundle savedInstanceState) {
@@ -148,19 +142,27 @@ public class MainActivity extends AppCompatActivity implements MeetingsAdapter.L
           }
           
           private void openFilterRoomList(){
-                    /*AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-                    LayoutInflater inflater = getLayoutInflater();
-                    View dialogView = inflater.inflate(R.layout.custom_room_list_dialog, null);
-                    builder.setView(dialogView);
-                    RecyclerView recyclerView = dialogView.findViewById(R.id.customroomlistdialog_recyclerview);
-                    RoomDialogAdapter roomDialogAdapter = new RoomDialogAdapter(this, viewModel, this);
-                    recyclerView.setAdapter(roomDialogAdapter);
-                    AlertDialog dialog = builder.create();
-                    dialog.show();*/
+                    MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
+                              .title("Choisissez une salle");
+                    viewModel.getRooms().observe(this, new Observer<List<Room>>() {
+                              @Override
+                              public void onChanged(List<Room> roomList) {
+                                        roomArray = roomList.toArray(new Room[0]);
+                              }
+                    });
+                    builder.items(Arrays.asList(roomArray))
+                    .itemsCallback(new MaterialDialog.ListCallback() {
+                              @Override
+                              public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                                        getMeetingsFilterByRoom(position);
+                              }
+                    });
+                    
+                    MaterialDialog dialog = builder.build();
+                              dialog.show();
           }
           
           private void openFilterDateCalendar(){
-
                     MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
                     builder.setTitleText("Sélectionner une date");
                     MaterialDatePicker<Long> materialDatePicker = builder.build();
@@ -176,15 +178,15 @@ public class MainActivity extends AppCompatActivity implements MeetingsAdapter.L
                     });
           }
           
+          
+          
+          // ----------------
+          // --- CALLBACK ---
+          // ----------------
+          
           @Override
           public void onClickDeleteButton(Meeting meeting) {
                     viewModel.deleteMeeting(meeting);
                     Toast.makeText(this, "La réunion a bien été supprimée", Toast.LENGTH_SHORT).show();
-          }
-          
-          @Override
-          public void onRoomSelectedListener(Room room) {
-                    getMeetingsFilterByRoom(room.getRoomId());
-                    Toast.makeText(this, "La liste est filtrée sur la réunion id : " + room.getRoomId(), Toast.LENGTH_SHORT).show();
           }
 }
