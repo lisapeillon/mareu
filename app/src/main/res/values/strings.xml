@@ -19,4 +19,7 @@
           <string name="err_format_email">Merci de saisir une adresse email</string>
     <string name="sortbyroom">Trier par salle</string>
     <string name="sortbydate">Trier par date</string>
+    <string name="remove_filters">Effacer les filtres</string>
+    <string name="sort">Trier</string>
+    <string name="filter">Filtrer</string>
 </resources>

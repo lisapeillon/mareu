@@ -2,23 +2,23 @@ package com.lisapeillon.mareu.Repositories;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.LiveData;
 
-import com.lisapeillon.mareu.Model.Meeting;
 import com.lisapeillon.mareu.Data.DummyMeetingsGenerator;
+import com.lisapeillon.mareu.Injections.DI;
+import com.lisapeillon.mareu.Model.Meeting;
 import com.lisapeillon.mareu.utils.LiveDataTestUtils;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class MeetingRepositoryTest {
@@ -30,15 +30,11 @@ public class MeetingRepositoryTest {
           private LiveData<List<Meeting>> meetings;
           private List<Meeting> result;
           
+          private final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+          
           @Before
           public void setup() {
-                    repository = new MeetingRepository();
-                    //Initialisation de la liste
-                    repository.createMeeting(DummyMeetingsGenerator.getMeeting1());
-                    repository.createMeeting(DummyMeetingsGenerator.getMeeting2());
-                    repository.createMeeting(DummyMeetingsGenerator.getMeeting3());
-                    repository.createMeeting(DummyMeetingsGenerator.getMeeting4());
-                    repository.createMeeting(DummyMeetingsGenerator.getMeeting5());
+                    repository = DI.getNewInstanceMeetingRepository();
           }
           
           @Test
@@ -47,21 +43,20 @@ public class MeetingRepositoryTest {
                     meetings = repository.getMeetingList();
                     result = LiveDataTestUtils.getValue(meetings);
                     // On veut que la liste soit égale à 5
-                    assertTrue(result.size() == 5);
+                    assertTrue(result.size() == 4);
           }
           
           @Test
           public void insertMeetingWithSuccess() throws InterruptedException{
-                    // On veut que la liste soit égale à 5
+                    // On veut que la liste soit égale à 4
                     meetings = repository.getMeetingList();
                     result = LiveDataTestUtils.getValue(meetings);
-                    assertEquals(5, result.size());
+                    assertEquals(4, result.size());
                     // On ajoute la  réunion
-                    Meeting meetingToInsert = DummyMeetingsGenerator.getMeeting1();
-                    repository.createMeeting(meetingToInsert);
-                    // On veut que la liste soit égale à 6
+                    repository.createMeeting(DummyMeetingsGenerator.getMeetingToInsert());
+                    // On veut que la liste soit égale à 5
                     result = LiveDataTestUtils.getValue(meetings);
-                    assertEquals(6, result.size());
+                    assertEquals(5, result.size());
           }
           
           @Test
@@ -83,13 +78,13 @@ public class MeetingRepositoryTest {
                     meetings = repository.getMeetingList();
                     result = LiveDataTestUtils.getValue(meetings);
                     //On vérifie que la première date est ...
-                    Date expectedDateBeforeSort = new SimpleDateFormat("yyyy-MM-dd").parse("2022-04-11");
+                    Date expectedDateBeforeSort = format.parse("2022-04-11");
                     assertEquals(result.get(0).getDate(), expectedDateBeforeSort);
                     //On trie la liste
                     meetings = repository.getMeetingListSortedByDate();
                     result = LiveDataTestUtils.getValue(meetings);
                     //On vérifie que la première date est...
-                    Date expectedDateAfterSort = new SimpleDateFormat("yyyy-MM-dd").parse("2022-01-24");
+                    Date expectedDateAfterSort = format.parse("2022-01-24");
                     assertEquals(result.get(0).getDate(), expectedDateAfterSort);
           }
           
@@ -119,7 +114,6 @@ public class MeetingRepositoryTest {
                     result = LiveDataTestUtils.getValue(meetings);
                     //On vérifie que la première et deuxième salles ont l'ID 3
                     assertEquals(3, result.get(0).getRoomId());
-                    assertEquals(3, result.get(1).getRoomId());
           }
           
           @Test
@@ -129,7 +123,6 @@ public class MeetingRepositoryTest {
                     result = LiveDataTestUtils.getValue(meetings);
                     //On vérifie que la première réunion a lieu le 11/04/2022
                     Date dateBeforeFilter = result.get(0).getDate();
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                     String formattedDateBeforeFilter = format.format(dateBeforeFilter);
                     assertEquals(formattedDateBeforeFilter, "2022-04-11");
                     //On filtre la liste sur la date 24/05/2022

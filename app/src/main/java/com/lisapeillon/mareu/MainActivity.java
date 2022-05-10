@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,12 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
-import com.lisapeillon.mareu.Data.DummyMeetingsGenerator;
-import com.lisapeillon.mareu.Injections.DI;
 import com.lisapeillon.mareu.Injections.ViewModelFactory;
 import com.lisapeillon.mareu.Model.Meeting;
 import com.lisapeillon.mareu.Model.Room;
-import com.lisapeillon.mareu.Repositories.MeetingRepository;
 import com.lisapeillon.mareu.ViewModel.MainViewModel;
 import com.lisapeillon.mareu.databinding.ActivityMainBinding;
 
@@ -33,7 +31,7 @@ import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity implements MeetingsAdapter.Listener  {
           
-          private  ActivityMainBinding binding;
+          private ActivityMainBinding binding;
           
           private MeetingsAdapter adapter;
           private MainViewModel viewModel;
@@ -48,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements MeetingsAdapter.L
                     setContentView(binding.getRoot());
                     
                     // --- Configure UI ---
-                    initView();
                     configureViewModel();
                     configureRecyclerView();
                     getMeetingList();
@@ -60,16 +57,6 @@ public class MainActivity extends AppCompatActivity implements MeetingsAdapter.L
           // ---------------
           // ------UI -------
           // ---------------
-          
-          private void initView(){
-                    binding.activityMainButtonErasefilters.setOnClickListener(v -> getMeetingList());
-                    MeetingRepository meetingRepository = DI.getMeetingRepository();
-                    meetingRepository.createMeeting(DummyMeetingsGenerator.getMeeting1());
-                    meetingRepository.createMeeting(DummyMeetingsGenerator.getMeeting2());
-                    meetingRepository.createMeeting(DummyMeetingsGenerator.getMeeting3());
-                    meetingRepository.createMeeting(DummyMeetingsGenerator.getMeeting4());
-                    meetingRepository.createMeeting(DummyMeetingsGenerator.getMeeting5());
-          }
           
           private void configureViewModel(){
                     viewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MainViewModel.class);
@@ -136,6 +123,9 @@ public class MainActivity extends AppCompatActivity implements MeetingsAdapter.L
                                         return true;
                               case R.id.menu_filterbyroom:
                                         openFilterRoomList();
+                                        return true;
+                              case R.id.menu_removefilters:
+                                        getMeetingList();
                                         return true;
                     }
                     return super.onOptionsItemSelected(item);

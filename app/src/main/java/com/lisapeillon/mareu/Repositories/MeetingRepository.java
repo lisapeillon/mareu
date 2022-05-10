@@ -1,8 +1,12 @@
 package com.lisapeillon.mareu.Repositories;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.lisapeillon.mareu.Data.DummyMeetingsGenerator;
 import com.lisapeillon.mareu.Model.Meeting;
 
 import java.text.SimpleDateFormat;
@@ -12,9 +16,10 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class MeetingRepository {
 
-          public List<Meeting> meetings = new ArrayList<>();
+          public List<Meeting> meetings = DummyMeetingsGenerator.generateMeetings();
           MutableLiveData<List<Meeting>> data = new  MutableLiveData<>();
 
           public void createMeeting(Meeting meeting){
@@ -44,7 +49,6 @@ public class MeetingRepository {
           }
           
           public LiveData<List<Meeting>> getMeetingsFilterByDate(Date date){
-                    //TODO
                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                     String formattedSelectedDate = format.format(date);
                     List<Meeting> meetingsFilterByDate = new ArrayList<>();
@@ -70,7 +74,6 @@ public class MeetingRepository {
           }
           
           public LiveData<List<Meeting>> getMeetingsFilterByRoom(int roomId){
-                    //TODO
                     List<Meeting> meetingsFilterByRoom = new ArrayList<>();
                     for(Meeting meeting : meetings){
                               if(meeting.getRoomId() == roomId){

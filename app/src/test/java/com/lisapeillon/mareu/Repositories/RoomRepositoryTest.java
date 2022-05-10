@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.LiveData;
 
+import com.lisapeillon.mareu.Injections.DI;
 import com.lisapeillon.mareu.Model.Room;
 import com.lisapeillon.mareu.Repositories.RoomRepository;
 import com.lisapeillon.mareu.utils.LiveDataTestUtils;
@@ -27,7 +28,7 @@ public class RoomRepositoryTest {
           
           @Before
           public void setup(){
-                    repository = new RoomRepository();
+                    repository = DI.getNewInstanceRoomRepository();
           }
           
           @Test

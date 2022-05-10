@@ -2,15 +2,38 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menu_sortbyroom"
-        android:title="@string/sortbyroom"/>
+        android:id="@+id/menu_sort"
+        android:title="@string/sort"
+        android:icon="@drawable/ic_sort"
+        android:contentDescription="@string/sort"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/menu_sortbyroom"
+                android:title="@string/sortbyroom"/>
+            <item
+                android:id="@+id/menu_sortbydate"
+                android:title="@string/sortbydate"/>
+        </menu>
+    </item>
+
     <item
-        android:id="@+id/menu_sortbydate"
-        android:title="@string/sortbydate"/>
+        android:id="@+id/menu_filter"
+        android:title="@string/filter"
+        android:icon="@drawable/ic_filter"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/menu_filterbyroom"
+                android:title="@string/filterbyroom"/>
+            <item
+                android:id="@+id/menu_filterbydate"
+                android:title="@string/filterbydate"/>
+        </menu>
+    </item>
     <item
-        android:id="@+id/menu_filterbyroom"
-        android:title="@string/filterbyroom"/>
-    <item
-        android:id="@+id/menu_filterbydate"
-        android:title="@string/filterbydate"/>
+        android:id="@+id/menu_removefilters"
+        android:title="@string/remove_filters"
+        android:icon="@drawable/ic_delete"
+        app:showAsAction="always"/>
 </menu>
