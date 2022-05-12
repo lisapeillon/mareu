@@ -20,7 +20,7 @@ import java.util.List;
 public class MeetingRepository {
 
           public List<Meeting> meetings = DummyMeetingsGenerator.generateMeetings();
-          MutableLiveData<List<Meeting>> data = new  MutableLiveData<>();
+          MutableLiveData<List<Meeting>> data = new MutableLiveData<>();
 
           public void createMeeting(Meeting meeting){
                     meetings.add(meeting);

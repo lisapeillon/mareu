@@ -22,7 +22,7 @@ public class DummyMeetingsGenerator {
           
           public static List<Meeting> DUMMY_MEETINGS;
           
-          static {
+           static {
                     try {
                               DUMMY_MEETINGS = Arrays.asList(
                                         new Meeting("Conduite du changement", format.parse("2022-04-11"),

@@ -7,7 +7,6 @@ import com.lisapeillon.mareu.Data.RoomGenerator;
 import com.lisapeillon.mareu.Model.Room;
 
 import java.util.List;
-import java.util.Observer;
 
 public class RoomRepository {
 

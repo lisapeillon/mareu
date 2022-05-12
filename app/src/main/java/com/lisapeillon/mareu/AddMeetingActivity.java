@@ -1,6 +1,5 @@
 package com.lisapeillon.mareu;
 
-import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -10,9 +9,11 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -22,10 +23,6 @@ import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.custom.SimpleCustomValidation;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
-import com.google.android.material.datepicker.CalendarConstraints;
-import com.google.android.material.datepicker.DateValidatorPointForward;
-import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
@@ -35,13 +32,11 @@ import com.lisapeillon.mareu.Model.Room;
 import com.lisapeillon.mareu.ViewModel.AddMeetingViewModel;
 import com.lisapeillon.mareu.databinding.ActivityAddMeetingBinding;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 public class AddMeetingActivity extends AppCompatActivity {
 
@@ -49,7 +44,7 @@ public class AddMeetingActivity extends AppCompatActivity {
           private AddMeetingViewModel viewModel;
           private ChipGroup chipGroup;
           private Room selectedRoom;
-          private  LocalTime selectedHour;
+          private LocalTime selectedHour;
           private Date selectedDate;
 
           @RequiresApi(api = Build.VERSION_CODES.O)
@@ -94,42 +89,23 @@ public class AddMeetingActivity extends AppCompatActivity {
                     configureChips();
           }
 
-          @RequiresApi(api = Build.VERSION_CODES.O)
           private void configureDatePicker(){
-                    // --- DatePicker Constraints ---
-                    CalendarConstraints.Builder constraintBuilder = new CalendarConstraints.Builder();
-                    constraintBuilder.setValidator(DateValidatorPointForward.now());
-
-                    // --- DatePicker Builder ---
-                    MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
-                    builder.setTitleText("Sélectionner une date");
-                    builder.setCalendarConstraints(constraintBuilder.build());
-                    MaterialDatePicker<Long> materialDatePicker = builder.build();
-
-                    // --- Show Date Picker ---
-                    binding.activityAddmeetingEdittextDatepicker.setOnClickListener(v -> {
-                              materialDatePicker.show(getSupportFragmentManager(), "DATE_PICKER");
+                    Calendar calendar = Calendar.getInstance();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    DatePicker datePicker = new DatePicker(this);
+                    datePicker.setCalendarViewShown(false);
+                    builder.setView(datePicker);
+          
+                    builder.setPositiveButton("OK", (dialog, id) -> {
+                              int year = datePicker.getYear();
+                              int month = datePicker.getMonth();
+                              int day = datePicker.getDayOfMonth();
+                              calendar.set(year, month, day);
+                              selectedDate = new Date(calendar.getTimeInMillis());
+                              binding.activityAddmeetingEdittextDatepicker.setText(year + "/" + month + "/" + day);
                     });
-
-                    // --- Set date in edittext ---
-                    materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
-                              @Override
-                              public void onPositiveButtonClick(Long selection) {
-                                        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-                                        calendar.setTimeInMillis(selection);
-                                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                                        selectedDate = new Date(selection);
-                                        String formattedDate = format.format(calendar.getTime());
-                                        binding.activityAddmeetingEdittextDatepicker.setText(formattedDate);
-                              }
-                    });
-
-                    materialDatePicker.addOnCancelListener(new DialogInterface.OnCancelListener() {
-                              @Override
-                              public void onCancel(DialogInterface dialog) {
-                                        materialDatePicker.onDestroy();
-                              }
-                    });
+                    
+                    binding.activityAddmeetingEdittextDatepicker.setOnClickListener(v ->builder.show());
           }
 
 
@@ -231,7 +207,7 @@ public class AddMeetingActivity extends AppCompatActivity {
                     validation.addValidation(this, R.id.activity_addmeeting_edittext_timepicker, "^[0-9]{1,2}:[0-9]{1,2}$", R.string.err_hour);
 
                     // --- Date ---
-                    validation.addValidation(this, R.id.activity_addmeeting_edittext_datepicker, "^[0-9]{4}-[0-9]{2}-[0-9]{2}", R.string.err_date);
+                    validation.addValidation(this, R.id.activity_addmeeting_edittext_datepicker, "^[0-9]{4}/[0-9]{1,2}/[0-9]{2}", R.string.err_date);
 
                     // --- Room ---
                     validation.addValidation(this, R.id.activity_addmeeting_spinner_room, new SimpleCustomValidation() {

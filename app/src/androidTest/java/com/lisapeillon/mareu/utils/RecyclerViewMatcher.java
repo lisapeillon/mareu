@@ -1,7 +1,5 @@
 package com.lisapeillon.mareu.utils;
 
-import static androidx.test.espresso.core.internal.deps.guava.base.Preconditions.checkNotNull;
-
 import android.view.View;
 
 import androidx.annotation.NonNull;

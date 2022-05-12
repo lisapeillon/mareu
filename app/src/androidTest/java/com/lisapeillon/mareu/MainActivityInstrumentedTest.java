@@ -2,15 +2,11 @@ package com.lisapeillon.mareu;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
-import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withParent;
-import static androidx.test.espresso.matcher.ViewMatchers.withTagValue;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static com.lisapeillon.mareu.utils.RecyclerViewItemCountAssertion.withItemCount;
@@ -27,9 +23,6 @@ import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.google.android.material.datepicker.MaterialDatePicker;
-import com.lisapeillon.mareu.Injections.DI;
-import com.lisapeillon.mareu.Repositories.MeetingRepository;
 import com.lisapeillon.mareu.utils.DeleteViewAction;
 
 import org.hamcrest.Matchers;
@@ -38,15 +31,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-
 @RunWith(AndroidJUnit4.class)
 public class MainActivityInstrumentedTest {
-          
-          private MeetingRepository meetingRepository;
           
           private static int ITEMS_COUNT = 4;
 
@@ -57,7 +43,6 @@ public class MainActivityInstrumentedTest {
           public void setup() {
                     MainActivity mainActivity = activityTestRule.getActivity();
                     assertThat(mainActivity, notNullValue());
-                    meetingRepository = DI.getNewInstanceMeetingRepository();
           }
 
           @Test
@@ -109,5 +94,15 @@ public class MainActivityInstrumentedTest {
                     onView(withText(R.string.filterbyroom)).perform(click());
                     onView(withText("Salle D")).perform(click());
                     onView(withId(R.id.activity_main_recyclerview)).check(matches(atPositionOnView(0, withText(String.valueOf('D')), R.id.recyclerview_row_textview_roomletter)));
+          }
+          
+          @Test
+          public void meetingList_filterByDateAction_shouldFilterMeetingList(){
+                    onView(withId(R.id.activity_main_recyclerview)).check(matches(atPositionOnView(0, withText("11/04/2022 - 16:34"), R.id.recyclerview_row_textview_datehour)));
+                    onView(withId(R.id.menu_filter)).perform(click());
+                    onView(withText(R.string.filterbydate)).perform(click());
+                    onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2022, 5, 24));
+                    onView(withText("OK")).perform(click());
+                    onView(withId(R.id.activity_main_recyclerview)).check(matches(atPositionOnView(0, withText("24/05/2022 - 10:30"), R.id.recyclerview_row_textview_datehour)));
           }
 }

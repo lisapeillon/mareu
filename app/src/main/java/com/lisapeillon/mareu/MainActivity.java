@@ -9,6 +9,7 @@ import android.widget.DatePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -23,6 +24,7 @@ import com.lisapeillon.mareu.Model.Room;
 import com.lisapeillon.mareu.ViewModel.MainViewModel;
 import com.lisapeillon.mareu.databinding.ActivityMainBinding;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -153,19 +155,22 @@ public class MainActivity extends AppCompatActivity implements MeetingsAdapter.L
           }
           
           private void openFilterDateCalendar(){
-                    MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
-                    builder.setTitleText("Sélectionner une date");
-                    MaterialDatePicker<Long> materialDatePicker = builder.build();
-                    materialDatePicker.show(getSupportFragmentManager(), "DATE_PICKER");
+                    Calendar calendar = Calendar.getInstance();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    DatePicker datePicker = new DatePicker(this);
+                    datePicker.setCalendarViewShown(false);
+                    builder.setView(datePicker);
                     
-                    materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
-                              @Override
-                              public void onPositiveButtonClick(Long selection) {
-                                        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-                                        calendar.setTimeInMillis(selection);
-                                        getMeetingsFilterByDate(new Date(selection));
-                              }
+                    builder.setPositiveButton("OK", (dialog, id) -> {
+                              int year = datePicker.getYear();
+                              int month = datePicker.getMonth();
+                              int day = datePicker.getDayOfMonth();
+                              calendar.set(year, month, day);
+                              Date date = new Date(calendar.getTimeInMillis());
+                              getMeetingsFilterByDate(date);
                     });
+                    
+                    builder.show();
           }
           
           
