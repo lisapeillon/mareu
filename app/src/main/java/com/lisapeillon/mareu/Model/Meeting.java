@@ -33,18 +33,4 @@ public class Meeting {
           public int getRoomId() { return roomId; }
 
           public ArrayList<String> getEmails() { return emails; }
-
-
-
-          // --- SETTERS ---
-
-          public void setSubject(String subject) { this.subject = subject; }
-
-          public void setHour(LocalTime hour) { this.hour = hour; }
-
-          public void setDate(Date date) { this.date = date; }
-
-          public void setRoomId(int roomId) { this.roomId = roomId; }
-
-          public void setEmails(ArrayList<String> emails) { this.emails = emails; }
 }

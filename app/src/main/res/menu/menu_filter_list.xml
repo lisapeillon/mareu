@@ -34,6 +34,6 @@
     <item
         android:id="@+id/menu_removefilters"
         android:title="@string/remove_filters"
-        android:icon="@drawable/ic_delete"
+        android:icon="@drawable/ic_remove_filter"
         app:showAsAction="always"/>
 </menu>

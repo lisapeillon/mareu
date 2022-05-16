@@ -19,12 +19,7 @@ public class Room {
     public int getRoomId() { return roomId; }
 
     public String getRoomName() { return roomName; }
-
-    // --- SETTERS ---
-
-    public void setRoomId(int roomId) { this.roomId = roomId; }
-
-    public void setRoomName(String roomName) { this.roomName = roomName; }
+    
     
     @Override
     public String toString() {
