@@ -1,6 +1,5 @@
 package com.lisapeillon.mareu;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.Menu;
@@ -12,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -47,7 +45,6 @@ public class AddMeetingActivity extends AppCompatActivity {
           private LocalTime selectedHour;
           private Date selectedDate;
 
-          @RequiresApi(api = Build.VERSION_CODES.O)
           @Override
           protected void onCreate(Bundle savedInstanceState) {
                     binding = ActivityAddMeetingBinding.inflate(getLayoutInflater());
@@ -79,7 +76,6 @@ public class AddMeetingActivity extends AppCompatActivity {
                     viewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(AddMeetingViewModel.class);
           }
 
-          @RequiresApi(api = Build.VERSION_CODES.O)
           private void initView() {
                     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                     chipGroup = binding.activityAddmeetingChipgroup;
@@ -109,7 +105,6 @@ public class AddMeetingActivity extends AppCompatActivity {
           }
 
 
-          @RequiresApi(api = Build.VERSION_CODES.O)
           private void configureTimePicker() {
                     // --- TimePicker Builder ---
                     MaterialTimePicker.Builder builder = new MaterialTimePicker.Builder();

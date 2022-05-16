@@ -1,8 +1,5 @@
 package com.lisapeillon.mareu.Repositories;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -16,7 +13,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-@RequiresApi(api = Build.VERSION_CODES.O)
 public class MeetingRepository {
 
           public List<Meeting> meetings = DummyMeetingsGenerator.generateMeetings();

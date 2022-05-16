@@ -1,9 +1,5 @@
 package com.lisapeillon.mareu.Data;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import com.lisapeillon.mareu.Model.Meeting;
 
 import java.text.ParseException;
@@ -13,10 +9,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@RequiresApi(api = Build.VERSION_CODES.O)
 public class DummyMeetingsGenerator {
           private static List<String> emails = Arrays.asList(
-                    "email1@email.com", "email2@email.com");
+                    "email1@email.com", "email2@email.com", "email3@email.com");
           
           private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
           

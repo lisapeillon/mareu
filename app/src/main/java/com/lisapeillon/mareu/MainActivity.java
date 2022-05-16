@@ -16,20 +16,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.lisapeillon.mareu.Injections.ViewModelFactory;
 import com.lisapeillon.mareu.Model.Meeting;
 import com.lisapeillon.mareu.Model.Room;
 import com.lisapeillon.mareu.ViewModel.MainViewModel;
 import com.lisapeillon.mareu.databinding.ActivityMainBinding;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity implements MeetingsAdapter.Listener  {
           

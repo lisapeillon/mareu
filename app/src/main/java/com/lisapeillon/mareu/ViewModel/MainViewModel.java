@@ -17,11 +17,7 @@ public class MainViewModel extends ViewModel {
           private final MeetingRepository meetingRepository;
           private final RoomRepository roomRepository;
           private final Executor executor;
-
-          public MeetingRepository getMeetingRepository() {
-                    return meetingRepository;
-          }
-
+          
           public MainViewModel(MeetingRepository meetingRepository, RoomRepository roomRepository, Executor executor){
                     this.meetingRepository = meetingRepository;
                     this.roomRepository = roomRepository;

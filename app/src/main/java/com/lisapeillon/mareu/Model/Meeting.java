@@ -6,7 +6,6 @@ import java.util.Date;
 
 public class Meeting {
 
-          private int meetingId;
           private String subject;
           private LocalTime hour;
           private Date date;

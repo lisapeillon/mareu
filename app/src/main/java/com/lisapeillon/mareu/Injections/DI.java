@@ -1,14 +1,8 @@
 package com.lisapeillon.mareu.Injections;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
-import com.lisapeillon.mareu.Model.Meeting;
 import com.lisapeillon.mareu.Repositories.MeetingRepository;
 import com.lisapeillon.mareu.Repositories.RoomRepository;
 
-@RequiresApi(api = Build.VERSION_CODES.O)
 public class DI {
           
           private static MeetingRepository sMeetingRepository = new MeetingRepository();
